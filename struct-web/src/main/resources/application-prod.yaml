@@ -1,0 +1,8 @@
+spring:
+  profiles:
+    active: prod
+  application:
+    name: struct-web
+server:
+  port: 8080
+
