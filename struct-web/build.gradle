@@ -1,0 +1,14 @@
+apply plugin: 'org.springframework.boot'
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web:2.2.6.RELEASE'
+}
+
+// 构建Spring Boot可执行Jar包
+bootJar {
+    mainClassName = 'com.ray.web.StructWebBootstrap'
+    archiveBaseName = 'struct-web'
+    archiveVersion = '1.0.0-SNAPSHOT'
+}
+
+description = 'struct-web'

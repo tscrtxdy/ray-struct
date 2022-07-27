@@ -1,0 +1,68 @@
+buildscript {
+    ext {
+        springBootVersion = '2.2.6.RELEASE'
+    }
+    repositories {
+        mavenLocal()
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+        maven {
+            url = uri('https://repo.maven.apache.org/maven2/')
+        }
+    }
+    dependencies {
+        classpath "io.freefair.gradle:lombok-plugin:6.4.1"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.11.RELEASE"
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+    id 'maven-publish'
+}
+
+configurations.all {
+    // check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    resolutionStrategy.cacheDynamicVersionsFor 0, 'seconds'
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'io.freefair.lombok'
+
+
+    repositories {
+        mavenCentral()
+        maven {
+            url = uri('http://nexus.yiwise.net/repository/maven-public/')
+            allowInsecureProtocol = true
+            credentials {
+                username "${NEXUS_USERNAME}"
+                password "${NEXUS_PASSWORD}"
+            }
+        }
+
+        maven {
+            url = uri('https://repo.maven.apache.org/maven2/')
+        }
+    }
+
+    group 'com.ray.struct'
+    version '1.0.SNAPSHOT'
+    java.sourceCompatibility = JavaVersion.VERSION_1_8
+
+    // 编译源码包
+    java {
+        withSourcesJar()
+    }
+
+    // 忽略编译警告
+    tasks.withType(JavaCompile) {
+        options.warnings = false
+    }
+
+}
