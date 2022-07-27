@@ -10,4 +10,5 @@ pluginManagement {
 
 rootProject.name = 'ray-stuct'
 include 'struct-web'
+include 'struct-common'
 
