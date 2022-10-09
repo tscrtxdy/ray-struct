@@ -4,4 +4,4 @@ spring:
   application:
     name: struct-web
 server:
-  port: 11030
+  port: 8080
